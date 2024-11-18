@@ -42,7 +42,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = [frontend_hostname, backend_hostname, 'localhost']
+ALLOWED_HOSTS = [frontend_hostname, backend_hostname, 'localhost', '.onrender.com']
 
 # CORS settings
 CORS_ALLOWED_ORIGINS = [
