@@ -51,10 +51,12 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost',  
 ]
 
-CSRF_TRUSTED_ORIGINS = ['*']  # Allow all origins
-CSRF_FAILURE_VIEW = 'django.views.csrf.csrf_failure'  # Default CSRF failure view
-
-
+# CSRF settings
+CSRF_TRUSTED_ORIGINS = [
+    FRONTEND_URL,
+    BACKEND_URL,
+    'http://localhost',
+]
 
 # Application definition
 
