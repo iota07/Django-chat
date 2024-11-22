@@ -51,6 +51,9 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost',  
 ]
 
+CSRF_TRUSTED_ORIGINS = ['*']  # Allow all origins
+CSRF_FAILURE_VIEW = 'django.views.csrf.csrf_failure'  # Default CSRF failure view
+
 
 
 # Application definition
@@ -125,6 +128,12 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ],
 }
+
+
+REST_AUTH_SERIALIZERS = {
+    'LOGIN_SERIALIZER': 'authentication.serializers.CustomLoginSerializer',
+}
+
 
 TEMPLATES = [
     {
