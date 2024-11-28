@@ -117,19 +117,18 @@ ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+
+# Explicitly set template to None to prevent template rendering
+ACCOUNT_EMAIL_CONFIRMATION_TEMPLATE = None
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True  # Confirm email on GET request
+
+# Redirect settings
 LOGIN_REDIRECT_URL = '/'
-ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = '/login/'  # Redirect URL after email confirmation for anonymous users
-ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = '/' # Redirect URL after email confirmation for authenticated users
+ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = FRONTEND_URL + '/login'
+ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = FRONTEND_URL
 
 # Ensure API response is expected for registration and confirmation
-ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1  # Set your preferred expiration
-ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = True
-
-# This will ensure the account confirmation URL will not try to load HTML
-ACCOUNT_EMAIL_CONFIRMATION_TEMPLATE = None
-
-# To ensure no templates are used for any other `allauth` views.
-ACCOUNT_LOGIN_ON_SIGNUP = True
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
 ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = True
 
 
@@ -154,6 +153,7 @@ REST_FRAMEWORK = {
     ],
 }
 
+# Disable template-based rendering
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -166,6 +166,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'debug': DEBUG,  # Add this to help diagnose template issues
         },
     },
 ]
