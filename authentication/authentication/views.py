@@ -1,3 +1,4 @@
+import os
 from django.contrib.auth import login
 from django.http import JsonResponse, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
@@ -7,11 +8,10 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from allauth.account.models import EmailAddress
 from allauth.account.views import ConfirmEmailView
-from django.urls import reverse
 import json
 
-
-
+# Fallback frontend URL if not set in environment
+FRONTEND_URL = os.getenv('FRONTEND_URL', 'http://localhost:9090')
 
 @method_decorator(csrf_exempt, name='dispatch')
 class CustomLoginView(View):
@@ -37,9 +37,6 @@ class CustomLoginView(View):
                 return JsonResponse({'detail': 'Email not verified'}, status=400)
         except json.JSONDecodeError:
             return JsonResponse({'detail': 'Invalid JSON'}, status=400)
-        
-
-
 
 class CustomConfirmEmailView(ConfirmEmailView):
     def get(self, request, *args, **kwargs):
@@ -47,9 +44,15 @@ class CustomConfirmEmailView(ConfirmEmailView):
             # Perform email confirmation
             self.object = self.get_object()
             
+            # Use the environment variable or fallback URL
+            frontend_url = os.getenv('FRONTEND_URL', 'http://localhost:9090')
+            
             # Redirect to frontend login or home page
-            return HttpResponseRedirect(f"{settings.FRONTEND_URL}/login?email_confirmed=true")
+            return HttpResponseRedirect(f"{frontend_url}/login?email_confirmed=true")
         
         except Exception as e:
-            # Return a JSON response or redirect with error
-            return HttpResponseRedirect(f"{settings.FRONTEND_URL}/login?email_error={str(e)}")
+            # Use the environment variable or fallback URL
+            frontend_url = os.getenv('FRONTEND_URL', 'http://localhost:9090')
+            
+            # Return a redirect with error
+            return HttpResponseRedirect(f"{frontend_url}/login?email_error={str(e)}")
