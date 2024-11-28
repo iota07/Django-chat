@@ -47,7 +47,10 @@ urlpatterns = [
     path('api/auth/registration/', include('dj_rest_auth.registration.urls')),
     
     # Custom email confirmation view (to return JSON instead of HTML)
-    path('api/auth/registration/account-confirm-email/<str:key>/', CustomConfirmEmailView.as_view(), name='account_confirm_email'),
+    
+    # **Override the default email confirmation URL** to use allauth
+    # This makes sure that allauth handles the email confirmation logic
+    path('api/auth/registration/account-confirm-email/<str:key>/', include('allauth.urls')),  # Let allauth handle email confirmation
     
     # Swagger UI documentation
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
