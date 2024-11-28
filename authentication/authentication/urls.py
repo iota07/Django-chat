@@ -23,11 +23,11 @@ from .views import CustomLoginView
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="Your Project API",
+        title="PULP API",
         default_version='v1',
-        description="API documentation for your project",
+        description="API documentation PULP project",
         terms_of_service="https://www.google.com/policies/terms/",
-        contact=openapi.Contact(email="contact@yourproject.local"),
+        contact=openapi.Contact(email="service01.hm@gmail.com"),
         license=openapi.License(name="BSD License"),
     ),
     public=True,
