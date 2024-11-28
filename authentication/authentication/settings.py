@@ -58,7 +58,7 @@ CSRF_TRUSTED_ORIGINS = [
     'http://localhost',
     'http://localhost:9090',
     'http://localhost:8000',
-    'http://81.240.12.157',
+    'https://81.240.12.157',
 ]
 
 
