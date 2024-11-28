@@ -56,6 +56,8 @@ CSRF_TRUSTED_ORIGINS = [
     FRONTEND_URL,
     BACKEND_URL,
     'http://localhost',
+    'http://localhost:9090',
+    'http://localhost:8000',
 ]
 
 
