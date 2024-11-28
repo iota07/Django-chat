@@ -5,7 +5,7 @@ from django.utils.decorators import method_decorator
 from django.views import View
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
-from allauth.account.models import EmailAddress
+from allauth.account.models import EmailAddress, EmailConfirmation, EmailConfirmationHMAC
 import json
 
 @method_decorator(csrf_exempt, name='dispatch')
@@ -32,3 +32,16 @@ class CustomLoginView(View):
                 return JsonResponse({'detail': 'Email not verified'}, status=400)
         except json.JSONDecodeError:
             return JsonResponse({'detail': 'Invalid JSON'}, status=400)
+        
+
+
+
+class CustomConfirmEmailView(View):
+    def get(self, request, key, *args, **kwargs):
+        try:
+            confirmation = EmailConfirmationHMAC.from_key(key)
+        except EmailConfirmation.DoesNotExist:
+            return JsonResponse({'detail': 'Invalid confirmation key'}, status=400)
+
+        confirmation.confirm(request)
+        return JsonResponse({'detail': 'Email confirmed successfully'})
