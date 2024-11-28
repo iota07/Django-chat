@@ -15,13 +15,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include, re_path
+from django.urls import path, include
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
-from allauth.account.views import confirm_email
 from .views import CustomLoginView, CustomConfirmEmailView
 
+# Swagger configuration
 schema_view = get_schema_view(
     openapi.Info(
         title="PULP API",
@@ -36,12 +36,20 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
+    # Admin panel
     path('admin/', admin.site.urls),
-    path('accounts/', include('allauth.urls')),
+    
+    # Custom login view (if you have custom logic for login)
     path('api/auth/login/', CustomLoginView.as_view(), name='custom_login'),
+    
+    # Dj-rest-auth URLs for login, registration, password reset, etc.
     path('api/auth/', include('dj_rest_auth.urls')),
     path('api/auth/registration/', include('dj_rest_auth.registration.urls')),
-    re_path(r'^api/auth/registration/account-confirm-email/(?P<key>.+)/$', CustomConfirmEmailView.as_view(), name='account_confirm_email'),
+    
+    # Custom email confirmation view (to return JSON instead of HTML)
+    path('api/auth/registration/account-confirm-email/<str:key>/', CustomConfirmEmailView.as_view(), name='account_confirm_email'),
+    
+    # Swagger UI documentation
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 ]

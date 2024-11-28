@@ -5,7 +5,8 @@ from django.utils.decorators import method_decorator
 from django.views import View
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
-from allauth.account.models import EmailAddress, EmailConfirmation, EmailConfirmationHMAC
+from allauth.account.models import EmailAddress
+from allauth.account.views import ConfirmEmailView
 import json
 
 @method_decorator(csrf_exempt, name='dispatch')
@@ -36,14 +37,7 @@ class CustomLoginView(View):
 
 
 
-class CustomConfirmEmailView(View):
-    def get(self, request, key, *args, **kwargs):
-        try:
-            confirmation = EmailConfirmationHMAC.from_key(key)
-            if not confirmation:
-                return JsonResponse({'detail': 'Invalid confirmation key'}, status=400)
-        except EmailConfirmation.DoesNotExist:
-            return JsonResponse({'detail': 'Invalid confirmation key'}, status=400)
-
-        confirmation.confirm(request)
-        return JsonResponse({'detail': 'Email confirmed successfully'})
+class CustomConfirmEmailView(ConfirmEmailView):
+    def get(self, request, *args, **kwargs):
+        # You can add custom logic here if needed
+        return JsonResponse({"message": "Email confirmed successfully."}, status=200)

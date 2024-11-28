@@ -118,6 +118,15 @@ LOGIN_REDIRECT_URL = '/'
 ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = '/'  # Redirect URL after email confirmation for anonymous users
 ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = '/' # Redirect URL after email confirmation for authenticated users
 
+# Ensure API response is expected for registration and confirmation
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1  # Set your preferred expiration
+ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = True
+
+# This will ensure the account confirmation URL will not try to load HTML
+ACCOUNT_EMAIL_CONFIRMATION_TEMPLATE = None
+
+
+# Root URL configuration
 ROOT_URLCONF = 'authentication.urls'
 
 # Email settings
