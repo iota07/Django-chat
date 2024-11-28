@@ -70,8 +70,9 @@ CORS_ALLOW_CREDENTIALS = True
 
 INSTALLED_APPS = [
 
-    'authentication',
     'corsheaders',
+    'rest_framework',
+    'rest_framework.authtoken',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -81,11 +82,10 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'allauth',
     'allauth.account',
-    'allauth.socialaccount',
-    'rest_framework',
-    'drf_yasg',
-    'rest_framework.authtoken',
-    'dj_rest_auth',
+    'allauth.socialaccount',    
+    'drf_yasg',    
+    'dj_rest_auth',    
+    
 ]
 
 AUTHENTICATION_BACKENDS = [
