@@ -5,6 +5,7 @@ from django.utils.decorators import method_decorator
 from django.views import View
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
+from allauth.account.models import EmailAddress
 import json
 
 @method_decorator(csrf_exempt, name='dispatch')
@@ -16,6 +17,9 @@ class CustomLoginView(View):
             password = data.get('password')
             try:
                 user = User.objects.get(email=email)
+                email_address = EmailAddress.objects.get(user=user, email=email)
+                if not email_address.verified:
+                    return JsonResponse({'detail': 'Email not verified'}, status=400)
                 user = authenticate(request, username=user.username, password=password)
                 if user is not None:
                     login(request, user)
@@ -24,5 +28,7 @@ class CustomLoginView(View):
                     return JsonResponse({'detail': 'Invalid credentials'}, status=400)
             except User.DoesNotExist:
                 return JsonResponse({'detail': 'Invalid credentials'}, status=400)
+            except EmailAddress.DoesNotExist:
+                return JsonResponse({'detail': 'Email not verified'}, status=400)
         except json.JSONDecodeError:
             return JsonResponse({'detail': 'Invalid JSON'}, status=400)
