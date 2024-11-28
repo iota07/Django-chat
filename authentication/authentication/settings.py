@@ -118,9 +118,9 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 
-# Explicitly set template to None to prevent template rendering
+# Disable template rendering
 ACCOUNT_EMAIL_CONFIRMATION_TEMPLATE = None
-ACCOUNT_CONFIRM_EMAIL_ON_GET = True  # Confirm email on GET request
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 
 # Redirect settings
 LOGIN_REDIRECT_URL = '/'
@@ -153,7 +153,6 @@ REST_FRAMEWORK = {
     ],
 }
 
-# Disable template-based rendering
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -166,7 +165,6 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
-            'debug': DEBUG,  # Add this to help diagnose template issues
         },
     },
 ]

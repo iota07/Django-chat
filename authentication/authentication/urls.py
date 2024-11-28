@@ -3,8 +3,7 @@ from django.urls import path, include
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
-from allauth.account.views import ConfirmEmailView
-from authentication.views import CustomLoginView
+from .views import CustomLoginView, CustomEmailConfirmationView
 
 # Swagger configuration
 schema_view = get_schema_view(
@@ -33,7 +32,7 @@ urlpatterns = [
     
     # Custom email confirmation view
     path('api/auth/registration/account-confirm-email/<str:key>/', 
-         ConfirmEmailView.as_view(), 
+         CustomEmailConfirmationView.as_view(), 
          name='account_confirm_email'),
     
     # Swagger UI documentation
