@@ -7,7 +7,11 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from allauth.account.models import EmailAddress
 from allauth.account.views import ConfirmEmailView
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework import status
 import json
+
 
 @method_decorator(csrf_exempt, name='dispatch')
 class CustomLoginView(View):
@@ -38,6 +42,24 @@ class CustomLoginView(View):
 
 
 class CustomConfirmEmailView(ConfirmEmailView):
+    """
+    Custom view to handle email confirmation and return a JSON response
+    """
     def get(self, request, *args, **kwargs):
-        # You can add custom logic here if needed
-        return JsonResponse({"message": "Email confirmed successfully."}, status=200)
+        # Override the default confirmation process here (optional)
+        # Perform email confirmation and return a response
+        try:
+            # Calling the parent class's method to perform the confirmation
+            response = super().get(request, *args, **kwargs)
+            
+            # Return a JSON response on success
+            return Response({
+                'message': 'Email confirmed successfully.',
+                'status': 'success',
+            }, status=status.HTTP_200_OK)
+        except Exception as e:
+            # If something goes wrong, return an error message
+            return Response({
+                'message': f'Error confirming email: {str(e)}',
+                'status': 'error',
+            }, status=status.HTTP_400_BAD_REQUEST)

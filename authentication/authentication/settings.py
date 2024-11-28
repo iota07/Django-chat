@@ -48,7 +48,10 @@ ALLOWED_HOSTS = [frontend_hostname, backend_hostname, 'localhost', '.onrender.co
 CORS_ALLOWED_ORIGINS = [
     FRONTEND_URL,  
     BACKEND_URL,   
-    'http://localhost',  
+    'http://localhost', 
+    'http://localhost:9090',
+    'http://localhost:8000',
+    'https://81.240.12.157', 
 ]
 
 # CSRF settings
@@ -115,7 +118,7 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 LOGIN_REDIRECT_URL = '/'
-ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = '/'  # Redirect URL after email confirmation for anonymous users
+ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = '/login/'  # Redirect URL after email confirmation for anonymous users
 ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = '/' # Redirect URL after email confirmation for authenticated users
 
 # Ensure API response is expected for registration and confirmation
@@ -124,6 +127,10 @@ ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = True
 
 # This will ensure the account confirmation URL will not try to load HTML
 ACCOUNT_EMAIL_CONFIRMATION_TEMPLATE = None
+
+# To ensure no templates are used for any other `allauth` views.
+ACCOUNT_LOGIN_ON_SIGNUP = True
+ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = True
 
 
 # Root URL configuration
