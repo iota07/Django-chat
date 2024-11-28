@@ -58,6 +58,8 @@ CSRF_TRUSTED_ORIGINS = [
     'http://localhost',
 ]
 
+
+CORS_ALLOW_CREDENTIALS = True
 # Application definition
 
 INSTALLED_APPS = [
@@ -124,18 +126,11 @@ EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.TokenAuthentication',
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ],
 }
-
-
-REST_AUTH_SERIALIZERS = {
-    'LOGIN_SERIALIZER': 'authentication.serializers.CustomLoginSerializer',
-}
-
 
 TEMPLATES = [
     {

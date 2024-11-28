@@ -19,8 +19,12 @@ from django.urls import path, include
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('accounts/', include('allauth.urls')),
-    path('api/auth/', include('dj_rest_auth.urls')),
-    path('api/auth/registration/', include('dj_rest_auth.registration.urls')),
+    from django.urls import path, include
+from dj_rest_auth.views import LoginView, LogoutView
+
+urlpatterns = [
+    path('api/login/', LoginView.as_view(), name='rest_login'),
+    path('api/logout/', LogoutView.as_view(), name='rest_logout'),
+    # other authentication-related URLs
+]
 ]
