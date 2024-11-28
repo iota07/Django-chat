@@ -40,6 +40,8 @@ class CustomConfirmEmailView(View):
     def get(self, request, key, *args, **kwargs):
         try:
             confirmation = EmailConfirmationHMAC.from_key(key)
+            if not confirmation:
+                return JsonResponse({'detail': 'Invalid confirmation key'}, status=400)
         except EmailConfirmation.DoesNotExist:
             return JsonResponse({'detail': 'Invalid confirmation key'}, status=400)
 
