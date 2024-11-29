@@ -1,40 +1,31 @@
 from django.contrib.auth import login
 from django.http import JsonResponse
-from django.views import View
-from .serializers import CustomLoginSerializer
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.exceptions import ValidationError
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
-from django.views.decorators.csrf import csrf_exempt
-from django.utils.decorators import method_decorator
+from rest_framework.views import APIView
+from .serializers import CustomLoginSerializer
 
-@method_decorator(csrf_exempt, name='dispatch')
-class CustomLoginView(View):
-    
+# Apply csrf_exempt to the view
+@csrf_exempt
+class CustomLoginView(APIView):
     @swagger_auto_schema(
         operation_description="Custom login endpoint",
-        request_body=openapi.Schema(
-            type=openapi.TYPE_OBJECT,
-            properties={
-                'email': openapi.Schema(type=openapi.TYPE_STRING, description='Email address'),
-                'password': openapi.Schema(type=openapi.TYPE_STRING, description='Password'),
-            },
-            required=['email', 'password'],
-        ),
+        request_body=CustomLoginSerializer,
         responses={
             200: openapi.Response(description='Logged in successfully'),
             400: openapi.Response(description='Invalid credentials or email not verified'),
         },
     )
     def post(self, request, *args, **kwargs):
-        # Parse request data
+        # Deserialize the request data with the custom login serializer
         serializer = CustomLoginSerializer(data=request.data)
         
         if serializer.is_valid():
             user = serializer.validated_data['user']
-            login(request, user)  # Log in the user using Django session authentication
-            
-            # Return a successful response
-            return JsonResponse({'detail': 'Logged in successfully'}, status=200)
-        
-        # Return validation errors if the serializer is not valid
-        return JsonResponse(serializer.errors, status=400)
+            login(request, user)
+            return JsonResponse({'detail': 'Logged in successfully'})
+        else:
+            # If the serializer is not valid, raise validation error
+            raise ValidationError(serializer.errors)
