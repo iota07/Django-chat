@@ -11,21 +11,22 @@ class CustomLoginSerializer(serializers.Serializer):
         email = data.get('email')
         password = data.get('password')
 
-        # Check if the user exists
         try:
+            # Find user by email
             user = User.objects.get(email=email)
             
-            # Ensure the email is verified
+            # Check email verification
             if not EmailAddress.objects.filter(user=user, email=email, verified=True).exists():
                 raise serializers.ValidationError("Email is not verified.")
+            
+            # Authenticate using username (Django's default auth uses username)
+            authenticated_user = authenticate(username=user.username, password=password)
+            
+            if not authenticated_user:
+                raise serializers.ValidationError("Invalid email or password.")
+            
+            data['user'] = authenticated_user
+            return data
+        
         except User.DoesNotExist:
-            raise serializers.ValidationError("Invalid email or password.")
-        
-        # Authenticate the user using the email (no need for username here)
-        user = authenticate(email=email, password=password)  # Use email directly
-        if not user:
-            raise serializers.ValidationError("Invalid email or password.")
-        
-        # Return the user object along with the validated data
-        data['user'] = user
-        return data
+            raise serializers.ValidationError("User not found.")
