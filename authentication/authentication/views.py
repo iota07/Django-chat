@@ -36,16 +36,22 @@ class CustomLoginView(APIView):
     def post(self, request, *args, **kwargs):
         serializer = CustomLoginSerializer(data=request.data)
         
-        try:
-            serializer.is_valid(raise_exception=True)
-            user = serializer.validated_data['user']
-            login(request, user)
+        if serializer.is_valid():
+            try:
+                user = serializer.validated_data['user']
+                login(request, user)
+                return Response(
+                    {'detail': 'Logged in successfully'}, 
+                    status=status.HTTP_200_OK
+                )
+            except KeyError:
+                return Response(
+                    {'detail': 'Unable to authenticate user'}, 
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+        else:
+            # Handle validation errors
             return Response(
-                {'detail': 'Logged in successfully'}, 
-                status=status.HTTP_200_OK
-            )
-        except serializers.ValidationError as e:
-            return Response(
-                {'detail': str(e.detail[0]) if e.detail else 'Validation error'}, 
+                {'detail': serializer.errors.get('non_field_errors', ['Invalid login credentials'])[0]}, 
                 status=status.HTTP_400_BAD_REQUEST
             )
