@@ -8,12 +8,29 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from allauth.account.models import EmailAddress
 import json
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
 
 # Fallback frontend URL if not set in environment
 FRONTEND_URL = os.getenv('FRONTEND_URL', 'http://localhost:9090')
 
 @method_decorator(csrf_exempt, name='dispatch')
 class CustomLoginView(View):
+    @swagger_auto_schema(
+        operation_description="Custom login endpoint",
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                'email': openapi.Schema(type=openapi.TYPE_STRING, description='Email address'),
+                'password': openapi.Schema(type=openapi.TYPE_STRING, description='Password'),
+            },
+            required=['email', 'password'],
+        ),
+        responses={
+            200: openapi.Response(description='Logged in successfully'),
+            400: openapi.Response(description='Invalid credentials or email not verified'),
+        },
+    )
     def post(self, request, *args, **kwargs):
         try:
             data = json.loads(request.body)
