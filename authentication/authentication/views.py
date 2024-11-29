@@ -1,5 +1,6 @@
 from django.contrib.auth import login
 from django.http import JsonResponse
+from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.exceptions import ValidationError
 from drf_yasg.utils import swagger_auto_schema
@@ -7,9 +8,9 @@ from drf_yasg import openapi
 from rest_framework.views import APIView
 from .serializers import CustomLoginSerializer
 
-# Apply csrf_exempt to the view
-@csrf_exempt
 class CustomLoginView(APIView):
+    # Use method_decorator to apply csrf_exempt to the dispatch method
+    @method_decorator(csrf_exempt)
     @swagger_auto_schema(
         operation_description="Custom login endpoint",
         request_body=CustomLoginSerializer,
