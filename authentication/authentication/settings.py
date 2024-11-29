@@ -70,6 +70,7 @@ CORS_ALLOW_CREDENTIALS = True
 
 INSTALLED_APPS = [
 
+    'intranet',
     'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
