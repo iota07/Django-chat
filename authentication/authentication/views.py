@@ -37,10 +37,13 @@ class CustomLoginView(View):
             email = data.get('email')
             password = data.get('password')
             try:
-                user = User.objects.get(email=email)
+                user = User.objects.get(email=email)  # Find user by email
                 email_address = EmailAddress.objects.get(user=user, email=email)
-                if not email_address.verified:
+                
+                if not email_address.verified:  # Check if the email is verified
                     return JsonResponse({'detail': 'Email not verified'}, status=400)
+
+                # Authenticate using the username (since user object is already retrieved)
                 user = authenticate(request, username=user.username, password=password)
                 if user is not None:
                     login(request, user)
