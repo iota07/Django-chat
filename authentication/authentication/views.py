@@ -4,7 +4,10 @@ from django.views import View
 from .serializers import CustomLoginSerializer
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 
+@method_decorator(csrf_exempt, name='dispatch')
 class CustomLoginView(View):
     
     @swagger_auto_schema(
