@@ -70,7 +70,7 @@ class Message(models.Model):
 class UserStatus(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     current_status = models.CharField(max_length=100)
-    story_text = models.CharField(max_length=255)
+    story_text = models.CharField(max_length=255, null=True, blank=True, default="")
     image = models.ImageField(upload_to='status_images/', null=True, blank=True)
     expires_at = models.DateTimeField(null=True, blank=True)
     visibility = models.CharField(max_length=20, choices=[
