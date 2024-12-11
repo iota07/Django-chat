@@ -70,6 +70,7 @@ CORS_ALLOW_CREDENTIALS = True
 
 INSTALLED_APPS = [
 
+    'channels',
     'intranet',
     'corsheaders',
     'rest_framework',
@@ -171,8 +172,18 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'authentication.wsgi.application'
+ASGI_APPLICATION = 'authentication.asgi.application'
 
+
+# Configure Channels layer backend (can be redis)
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],  # Redis must be running
+        },
+    },
+}
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
