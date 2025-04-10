@@ -1,4 +1,4 @@
-# Django-chat backend.
+# Django-chat REST API backend.
 
 # ERD PostgresSQL Database
 
