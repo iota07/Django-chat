@@ -1,4 +1,4 @@
-# Django-chat REST API backend.
+# Intranet REST API backend.
 
 # REST API
 
