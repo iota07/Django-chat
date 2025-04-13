@@ -1,32 +1,36 @@
 # Intranet REST API backend.
 
-# REST API
+## REST API Swagger
 
 [live API](https://django-chat-z4za.onrender.com/swagger/)
 
-# ERD PostgresSQL Database
+## REST API Redoc
+
+[live API](https://django-chat-z4za.onrender.com/redoc/)
+
+## ERD PostgresSQL Database
 
 ![Alt text](Database-v1.1.png)
 
-## Environment variables.
+### Environment variables.
 
-### Django settings
+#### Django settings
 
 SECRET_KEY='django secret key'
 
-### Debug settings
+#### Debug settings
 
 DEBUG='value'
 
-### Frontend settings
+#### Frontend settings
 
 FRONTEND_URL='https://frontend.url'
 
-### Backend settings
+#### Backend settings
 
 BACKEND_URL='htttps://backend.url'
 
-### Database settings
+#### Database settings
 
 DATABASE_NAME='database name'
 
@@ -38,7 +42,7 @@ DATABASE_HOST='database host url'
 
 DATABASE_PORT='database port'
 
-### Email settings
+#### Email settings
 
 EMAIL_HOST='smtp.host.url'
 
