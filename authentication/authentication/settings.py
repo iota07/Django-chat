@@ -50,8 +50,7 @@ CORS_ALLOWED_ORIGINS = [
     BACKEND_URL,   
     'http://localhost', 
     'http://localhost:9090',
-    'http://localhost:8000',
-    'https://81.240.12.157', 
+    'http://localhost:8000',     
 ]
 
 # CSRF settings
