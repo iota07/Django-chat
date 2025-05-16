@@ -126,9 +126,7 @@ ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 
 # Redirect settings
 LOGIN_REDIRECT_URL = '/'
-
-# After email confirmation, send everyone to your frontend root (/)
-ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL     = FRONTEND_URL
+ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = FRONTEND_URL + '/login'
 ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = FRONTEND_URL
 
 # Ensure API response is expected for registration and confirmation
