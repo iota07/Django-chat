@@ -9,9 +9,9 @@ from .views import CustomLoginView
 # Swagger configuration
 schema_view = get_schema_view(
     openapi.Info(
-        title="PULP API",
-        default_version='v1.1',
-        description="API documentation PULP project",
+        title="Intranet HM Service API",
+        default_version='v1.2',
+        description="API documentation HM Intranet project",
         terms_of_service="https://www.google.com/policies/terms/",
         contact=openapi.Contact(email="service01.hm@gmail.com"),
         license=openapi.License(name="BSD License"),
